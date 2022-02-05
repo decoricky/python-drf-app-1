@@ -4,5 +4,6 @@ from . import views
 
 app_name = 'apiv1'
 urlpatterns = [
-    path('studio/', views.StudioListAPIView.as_view())
+    path('bmonster/', views.UpdateDataAPIView.as_view()),
+    path('bmonster/studio/', views.StudioListAPIView.as_view()),
 ]

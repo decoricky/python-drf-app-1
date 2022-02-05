@@ -8,11 +8,14 @@ django = "*"
 djangorestframework = "*"
 django-environ = "*"
 django-filter = "*"
+requests = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 pylint = "*"
 pep8 = "*"
 flake8 = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.9"
