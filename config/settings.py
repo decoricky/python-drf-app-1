@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # DRF
     'rest_framework',
+    'django_filters',
     # My Application
     'bmonster.apps.BmonsterConfig',
     'apiv1.apps.Apiv1Config',
