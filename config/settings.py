@@ -134,8 +134,3 @@ STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# LoginView/LogoutView を利用する際の設定
-# LOGIN_URL = '/accounts/login'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'rest_framework:login'
