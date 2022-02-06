@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from bmonster.models import Studio, Performer, Program, Schedule
+from .models import Studio, Performer, Program, Schedule
 
 
 class StudioModelAdmin(admin.ModelAdmin):

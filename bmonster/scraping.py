@@ -5,7 +5,7 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 
-from bmonster.models import Studio, Performer, Program, Schedule
+from .models import Studio, Performer, Program, Schedule
 
 JST = datetime.timezone(datetime.timedelta(hours=9))
 BASE_URL = "https://www.b-monster.jp"
