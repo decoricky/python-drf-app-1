@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # My Application
     'bmonster.apps.BmonsterConfig',
     'apiv1.apps.Apiv1Config',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,9 @@ STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Userモデル拡張
+AUTH_USER_MODEL = 'account.User'
 
 # DRF
 REST_FRAMEWORK = {
