@@ -1,3 +1,5 @@
+import datetime
+
 from django_filters import rest_framework as filters
 from rest_framework import generics, views, status
 from rest_framework.response import Response
@@ -5,6 +7,9 @@ from rest_framework.response import Response
 from bmonster import scraping
 from bmonster.models import Studio, Performer, Program, Schedule
 from .serializers import StudioSerializer, PerformerSerializer, ProgramSerializer, ScheduleSerializer
+
+JST = datetime.timezone(datetime.timedelta(hours=9))
+TODAY = datetime.datetime.now(JST).date()
 
 
 class UpdateDataAPIView(views.APIView):
@@ -35,7 +40,7 @@ class ProgramListAPIView(generics.ListAPIView):
 
 
 class ScheduleListAPIView(generics.ListAPIView):
-    queryset = Schedule.objects.all()
+    queryset = Schedule.objects.filter(modified_datetime__gte=TODAY)
     serializer_class = ScheduleSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['studio', 'performer', 'program']
