@@ -10,6 +10,7 @@ django-environ = "*"
 django-filter = "*"
 requests = "*"
 beautifulsoup4 = "*"
+djangorestframework-camel-case = "*"
 
 [dev-packages]
 pylint = "*"
