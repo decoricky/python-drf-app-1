@@ -11,6 +11,7 @@ django-filter = "*"
 requests = "*"
 beautifulsoup4 = "*"
 djangorestframework-camel-case = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 pylint = "*"

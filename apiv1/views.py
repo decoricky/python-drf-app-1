@@ -2,6 +2,7 @@ import datetime
 
 from django_filters import rest_framework as filters
 from rest_framework import generics, views, status, viewsets
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .serializers import StudioSerializer, PerformerSerializer, ProgramSerializer, ScheduleSerializer, AttendanceHistorySerializer
@@ -23,6 +24,7 @@ class StudioListAPIView(generics.ListAPIView):
     serializer_class = StudioSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['code', 'name']
+    permission_classes = [AllowAny]
 
 
 class PerformerListAPIView(generics.ListAPIView):
@@ -30,6 +32,7 @@ class PerformerListAPIView(generics.ListAPIView):
     serializer_class = PerformerSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['name']
+    permission_classes = [AllowAny]
 
 
 class ProgramListAPIView(generics.ListAPIView):
@@ -37,6 +40,7 @@ class ProgramListAPIView(generics.ListAPIView):
     serializer_class = ProgramSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['performer', 'name']
+    permission_classes = [AllowAny]
 
 
 class ScheduleListAPIView(generics.ListAPIView):
@@ -44,6 +48,7 @@ class ScheduleListAPIView(generics.ListAPIView):
     serializer_class = ScheduleSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['studio', 'performer', 'program']
+    permission_classes = [AllowAny]
 
 
 class AttendanceHistoryViewSet(viewsets.ModelViewSet):
