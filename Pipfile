@@ -17,7 +17,6 @@ djangorestframework-simplejwt = "*"
 pylint = "*"
 pep8 = "*"
 flake8 = "*"
-pytest = "*"
 
 [requires]
 python_version = "3.9"
