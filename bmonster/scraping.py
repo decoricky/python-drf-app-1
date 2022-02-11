@@ -122,7 +122,7 @@ def update_data():
         program = Program.objects.get(performer=performer, name=program_name)
 
         try:
-            schedule = Schedule.objects.get(studio=studio, start_time=start_time, performer=performer, program=program)
+            schedule = Schedule.objects.get(studio=studio, start_time=start_time)
         except Schedule.DoesNotExist:
             schedule = Schedule(studio=studio, start_time=start_time, performer=performer, program=program)
         schedule.save()
