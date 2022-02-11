@@ -2,6 +2,7 @@ import datetime
 
 from django_filters import rest_framework as filters
 from rest_framework import generics, views, status, viewsets
+from rest_framework.fields import CurrentUserDefault
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
@@ -54,5 +55,6 @@ class ScheduleListAPIView(generics.ListAPIView):
 class AttendanceHistoryViewSet(viewsets.ModelViewSet):
     queryset = AttendanceHistory.objects.all()
     serializer_class = AttendanceHistorySerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filterset_fields = ['user']
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)

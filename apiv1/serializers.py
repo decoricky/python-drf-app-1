@@ -1,6 +1,7 @@
 import datetime
 
 from rest_framework import serializers
+from rest_framework.fields import CurrentUserDefault
 
 from bmonster.models import Studio, Performer, Program, Schedule, AttendanceHistory
 
@@ -20,7 +21,7 @@ class PerformerSerializer(serializers.ModelSerializer):
 
 
 class ProgramSerializer(serializers.ModelSerializer):
-    performer_name = serializers.ReadOnlyField(source='performer.name')
+    performer = PerformerSerializer()
 
     class Meta:
         model = Program
@@ -42,9 +43,9 @@ class ScheduleSerializer(serializers.ModelSerializer):
 
 
 class AttendanceHistorySerializer(serializers.ModelSerializer):
-    user_name = serializers.ReadOnlyField(source='user.username')
-    program_name = serializers.ReadOnlyField(source='program.name')
+    user = serializers.HiddenField(default=CurrentUserDefault())
+    program = ProgramSerializer()
 
     class Meta:
         model = AttendanceHistory
-        exclude = ['id', 'created_datetime', 'modified_datetime']
+        exclude = ['created_datetime', 'modified_datetime']
