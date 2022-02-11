@@ -35,7 +35,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Schedule
-        exclude = ['id', 'created_datetime', 'modified_datetime']
+        exclude = ['created_datetime', 'modified_datetime']
 
     def get_end_time(self, instance):
         return instance.start_time.astimezone(JST) + datetime.timedelta(minutes=45)
