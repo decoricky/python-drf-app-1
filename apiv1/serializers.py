@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework import serializers
 
-from bmonster.models import Studio, Performer, Program, Schedule
+from bmonster.models import Studio, Performer, Program, Schedule, AttendanceHistory
 
 JST = datetime.timezone(datetime.timedelta(hours=9))
 
@@ -24,18 +24,27 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ['id', 'performer_name', 'name']
+        exclude = ['created_datetime', 'modified_datetime']
 
 
 class ScheduleSerializer(serializers.ModelSerializer):
-    studio_name = serializers.ReadOnlyField(source='studio.name')
-    performer_name = serializers.ReadOnlyField(source='performer.name')
-    program_name = serializers.ReadOnlyField(source='program.name')
+    studio = serializers.ReadOnlyField(source='studio.name')
+    performer = serializers.ReadOnlyField(source='performer.name')
+    program = serializers.ReadOnlyField(source='program.name')
     end_time = serializers.SerializerMethodField()
 
     class Meta:
         model = Schedule
-        fields = ['id', 'studio_name', 'start_time', 'end_time', 'performer_name', 'program_name']
+        exclude = ['id', 'created_datetime', 'modified_datetime']
 
     def get_end_time(self, instance):
         return instance.start_time.astimezone(JST) + datetime.timedelta(minutes=45)
+
+
+class AttendanceHistorySerializer(serializers.ModelSerializer):
+    user_name = serializers.ReadOnlyField(source='user.username')
+    program_name = serializers.ReadOnlyField(source='program.name')
+
+    class Meta:
+        model = AttendanceHistory
+        exclude = ['id', 'created_datetime', 'modified_datetime']

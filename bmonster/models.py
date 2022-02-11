@@ -1,5 +1,7 @@
 from django.db import models
 
+from account.models import User
+
 
 class Studio(models.Model):
     class Meta:
@@ -42,7 +44,6 @@ class Program(models.Model):
         return f'{self.performer}:{self.name}'
 
 
-# TODO レコードが多すぎるのでDynamoにしたい
 class Schedule(models.Model):
     class Meta:
         db_table = 'schedule'
@@ -54,5 +55,19 @@ class Schedule(models.Model):
     start_time = models.DateTimeField(verbose_name='開始日時')
     performer = models.ForeignKey(Performer, verbose_name='パフォーマー', on_delete=models.CASCADE)
     program = models.ForeignKey(Program, verbose_name='プログラム', on_delete=models.CASCADE)
+    created_datetime = models.DateTimeField(verbose_name='登録日時', auto_now_add=True)
+    modified_datetime = models.DateTimeField(verbose_name='変更日時', auto_now=True)
+
+
+class AttendanceHistory(models.Model):
+    class Meta:
+        db_table = 'attendance_history'
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'program', 'attendance_datetime'], name='attendance_history_uidx_1'),
+        ]
+
+    user = models.ForeignKey(User, verbose_name='ユーザー', on_delete=models.CASCADE, db_index=True)
+    program = models.ForeignKey(Program, verbose_name='プログラム', on_delete=models.CASCADE)
+    attendance_datetime = models.DateTimeField(verbose_name='受講日時')
     created_datetime = models.DateTimeField(verbose_name='登録日時', auto_now_add=True)
     modified_datetime = models.DateTimeField(verbose_name='変更日時', auto_now=True)

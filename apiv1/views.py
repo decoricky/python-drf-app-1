@@ -1,12 +1,12 @@
 import datetime
 
 from django_filters import rest_framework as filters
-from rest_framework import generics, views, status
+from rest_framework import generics, views, status, viewsets
 from rest_framework.response import Response
 
-from .serializers import StudioSerializer, PerformerSerializer, ProgramSerializer, ScheduleSerializer
+from .serializers import StudioSerializer, PerformerSerializer, ProgramSerializer, ScheduleSerializer, AttendanceHistorySerializer
 from bmonster import scraping
-from bmonster.models import Studio, Performer, Program, Schedule
+from bmonster.models import Studio, Performer, Program, Schedule, AttendanceHistory
 
 JST = datetime.timezone(datetime.timedelta(hours=9))
 TODAY = datetime.datetime.now(JST).date()
@@ -44,3 +44,10 @@ class ScheduleListAPIView(generics.ListAPIView):
     serializer_class = ScheduleSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['studio', 'performer', 'program']
+
+
+class AttendanceHistoryViewSet(viewsets.ModelViewSet):
+    queryset = AttendanceHistory.objects.all()
+    serializer_class = AttendanceHistorySerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ['user']
