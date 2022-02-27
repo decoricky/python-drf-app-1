@@ -6,12 +6,13 @@ name = "pypi"
 [packages]
 django = "*"
 djangorestframework = "*"
-django-environ = "*"
 django-filter = "*"
 requests = "*"
 beautifulsoup4 = "*"
 djangorestframework-camel-case = "*"
 djangorestframework-simplejwt = "*"
+mysqlclient = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pylint = "*"

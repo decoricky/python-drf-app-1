@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: appuserpass
+      TZ: Asia/Tokyo
+    volumes:
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+#      - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d # DBを初期化する場合
+      - ./log/mysql:/var/log/mysql
+      - ./data/mysql:/var/lib/mysql # データを永続化する場合
+    ports:
+      - "3306:3306" # ホストマシン上のmigrationで必要
