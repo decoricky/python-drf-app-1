@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from bmonster import models, scraping
+from bmonster import models
+from bmonster.services import scraping
 
 
 class TestUpdateData(TestCase):

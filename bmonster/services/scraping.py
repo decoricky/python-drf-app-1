@@ -5,8 +5,6 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 
-from .models import Studio, Performer, Program, Schedule
-
 JST = datetime.timezone(datetime.timedelta(hours=9))
 BASE_URL = "https://www.b-monster.jp"
 PAGE_PATH = "reserve/"
@@ -84,45 +82,3 @@ def parse_schedule_to_performer_and_program(schedule_list: List[ScrapingItem]) -
         program_name_set.add((schedule.performer_name, schedule.program_name))
 
     return performer_name_set, program_name_set
-
-
-def update_data():
-    query_set = Studio.objects.all()
-    item_list: List[ScrapingItem] = []
-    for studio in query_set:
-        studio_code = studio.code
-        studio_name = studio.name
-        item_list += get_schedule_by_studio(studio_code, studio_name)
-
-    performer_name_set, program_name_set = parse_schedule_to_performer_and_program(item_list)
-
-    for name in performer_name_set:
-        try:
-            performer = Performer.objects.get(name=name)
-        except Performer.DoesNotExist:
-            performer = Performer(name=name)
-        performer.save()
-
-    for performer_name, program_name in program_name_set:
-        performer = Performer.objects.get(name=performer_name)
-        try:
-            program = Program.objects.get(performer=performer, name=program_name)
-        except Program.DoesNotExist:
-            program = Program(performer=performer, name=program_name)
-        program.save()
-
-    for item in item_list:
-        studio_name = item.studio_name
-        start_time = item.start_time
-        performer_name = item.performer_name
-        program_name = item.program_name
-
-        studio = Studio.objects.get(name=studio_name)
-        performer = Performer.objects.get(name=performer_name)
-        program = Program.objects.get(performer=performer, name=program_name)
-
-        try:
-            schedule = Schedule.objects.get(studio=studio, start_time=start_time)
-        except Schedule.DoesNotExist:
-            schedule = Schedule(studio=studio, start_time=start_time, performer=performer, program=program)
-        schedule.save()

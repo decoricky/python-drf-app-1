@@ -7,8 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .serializers import StudioSerializer, PerformerSerializer, ProgramSerializer, ScheduleSerializer, AttendanceHistorySerializer
-from bmonster import scraping
-from bmonster.models import Studio, Performer, Program, Schedule, AttendanceHistory
+from bmonster import models
 
 TODAY = make_aware(datetime.datetime.now())
 TODAY.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -16,12 +15,12 @@ TODAY.replace(hour=0, minute=0, second=0, microsecond=0)
 
 class UpdateDataAPIView(views.APIView):
     def post(self, request, *args, **kwargs):
-        scraping.update_data()
+        models.update_data()
         return Response(status=status.HTTP_201_CREATED)
 
 
 class StudioListAPIView(generics.ListAPIView):
-    queryset = Studio.objects.all()
+    queryset = models.Studio.objects.all()
     serializer_class = StudioSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['code', 'name']
@@ -29,7 +28,7 @@ class StudioListAPIView(generics.ListAPIView):
 
 
 class PerformerListAPIView(generics.ListAPIView):
-    queryset = Performer.objects.all()
+    queryset = models.Performer.objects.all()
     serializer_class = PerformerSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['name']
@@ -37,7 +36,7 @@ class PerformerListAPIView(generics.ListAPIView):
 
 
 class ProgramListAPIView(generics.ListAPIView):
-    queryset = Program.objects.all()
+    queryset = models.Program.objects.all()
     serializer_class = ProgramSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['performer', 'name']
@@ -45,7 +44,7 @@ class ProgramListAPIView(generics.ListAPIView):
 
 
 class ScheduleListAPIView(generics.ListAPIView):
-    queryset = Schedule.objects.filter(modified_datetime__gte=TODAY)
+    queryset = models.Schedule.objects.filter(modified_datetime__gte=TODAY)
     serializer_class = ScheduleSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filterset_fields = ['studio', 'performer', 'program']
@@ -53,7 +52,7 @@ class ScheduleListAPIView(generics.ListAPIView):
 
 
 class AttendanceHistoryViewSet(viewsets.ModelViewSet):
-    queryset = AttendanceHistory.objects.all()
+    queryset = models.AttendanceHistory.objects.all()
     serializer_class = AttendanceHistorySerializer
 
     def get_queryset(self):
