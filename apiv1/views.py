@@ -1,8 +1,8 @@
 import datetime
 
+from django.utils.timezone import make_aware
 from django_filters import rest_framework as filters
 from rest_framework import generics, views, status, viewsets
-from rest_framework.fields import CurrentUserDefault
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
@@ -10,8 +10,8 @@ from .serializers import StudioSerializer, PerformerSerializer, ProgramSerialize
 from bmonster import scraping
 from bmonster.models import Studio, Performer, Program, Schedule, AttendanceHistory
 
-JST = datetime.timezone(datetime.timedelta(hours=9))
-TODAY = datetime.datetime.now(JST).date()
+TODAY = make_aware(datetime.datetime.now())
+TODAY.replace(hour=0, minute=0, second=0, microsecond=0)
 
 
 class UpdateDataAPIView(views.APIView):
