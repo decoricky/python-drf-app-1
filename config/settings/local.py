@@ -12,9 +12,9 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'app'),
-        'USER': os.getenv('DB_USER', 'appuser'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'appuserpass'),
+        'NAME': os.getenv('DB_NAME', 'app_db'),
+        'USER': os.getenv('DB_USER', 'app_db_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'app_db_pass'),
         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
         'PORT': os.getenv('DB_PORT', 3306),
         'OPTIONS': {

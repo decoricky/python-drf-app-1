@@ -13,6 +13,8 @@ djangorestframework-camel-case = "*"
 djangorestframework-simplejwt = "*"
 mysqlclient = "*"
 python-dotenv = "*"
+django-storages = "*"
+boto3 = "*"
 
 [dev-packages]
 pylint = "*"

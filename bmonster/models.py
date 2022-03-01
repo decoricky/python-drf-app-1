@@ -1,3 +1,5 @@
+import os.path
+import uuid
 from typing import List
 
 from django.db import models
@@ -62,6 +64,10 @@ class Schedule(models.Model):
     modified_datetime = models.DateTimeField(verbose_name='変更日時', auto_now=True)
 
 
+def upload_image_path(instance, filename):
+    return os.path.join(str(instance.user.id), str(uuid.uuid4()), filename)
+
+
 class AttendanceHistory(models.Model):
     class Meta:
         db_table = 'attendance_history'
@@ -72,6 +78,7 @@ class AttendanceHistory(models.Model):
     user = models.ForeignKey(User, verbose_name='ユーザー', on_delete=models.CASCADE, db_index=True)
     program = models.ForeignKey(Program, verbose_name='プログラム', on_delete=models.CASCADE)
     attendance_datetime = models.DateTimeField(verbose_name='受講日時')
+    image = models.FileField(verbose_name='写真', null=True, upload_to=upload_image_path)
     created_datetime = models.DateTimeField(verbose_name='登録日時', auto_now_add=True)
     modified_datetime = models.DateTimeField(verbose_name='変更日時', auto_now=True)
 
